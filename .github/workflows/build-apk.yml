@@ -33,6 +33,15 @@ jobs:
           npx cap add android
           npx cap sync android
 
+      - name: Perbaiki keyboard menutupi input
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          S=android/app/src/main/res/values/styles.xml
+          grep -q windowSoftInputMode $M || perl -0pi -e 's#<activity #<activity android:windowSoftInputMode="adjustResize" #' $M
+          perl -0pi -e 's#(<style name="AppTheme.NoActionBar"[^>]*>)#$1\n        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>#' $S
+          grep -n "adjustResize" $M
+          grep -n "OptOutEdgeToEdge" $S
+
       - name: Build APK
         run: |
           cd android
@@ -44,3 +53,4 @@ jobs:
         with:
           name: Inventory-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          
