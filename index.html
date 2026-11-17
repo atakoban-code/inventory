@@ -11079,6 +11079,25 @@ html body #pop .trr.bkr .pcn .bko-h{font-size:12px;font-weight:700;color:var(--m
 @keyframes itS{0%{opacity:0;transform:translateY(6px)}20%,80%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){#ins .it-ic{animation:none}}
 </style>
+<style id="kb-fix">
+.pop{box-sizing:border-box;padding-bottom:var(--kb,0px)}
+.pop .sheet{max-height:92%}
+</style>
+<script id="kb-fix-js">(function(){
+var vv=window.visualViewport,d=document.documentElement;
+function f(){
+  var kb=vv?Math.max(0,Math.round(window.innerHeight-vv.height-vv.offsetTop)):0;
+  d.style.setProperty('--kb',(kb>80?kb:0)+'px');
+}
+if(vv){vv.addEventListener('resize',f);vv.addEventListener('scroll',f);}
+window.addEventListener('resize',f);
+document.addEventListener('focusin',function(e){
+  var t=e.target;if(!t||!t.closest||!t.closest('.sheet'))return;
+  [250,600].forEach(function(ms){setTimeout(function(){f();try{t.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}},ms)});
+});
+document.addEventListener('focusout',function(){setTimeout(f,300)});
+f();
+})();</script>
 </head><body class="hm">
 <div id="ins" aria-hidden="true"><div class="it-ic">UC</div><div class="it-t">Inventory Management</div><div class="it-sub">Sistem Inventory Management</div><div class="it-bar"><i></i></div><div class="it-st"><span>Mengunduh…</span><span>Memasang…</span><span>Membuka aplikasi…</span></div></div>
 <script>(function(){var e=document.getElementById('ins');setTimeout(function(){e.classList.add('out');setTimeout(function(){e.remove()},500)},3200)})()</script>
